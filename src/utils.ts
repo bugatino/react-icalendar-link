@@ -4,6 +4,7 @@ export interface ICalEvent {
   startTime: string;
   endTime: string;
   location: string;
+  url: string;
 }
 
 function pad(num: number): string {
@@ -21,7 +22,7 @@ export function formatDate(dateString: string): string {
     pad(dateTime.getUTCDate()),
     "T",
     pad(dateTime.getUTCHours()),
-    pad(dateTime.getUTCMinutes()) + "00Z"
+    pad(dateTime.getUTCMinutes()) + "00Z",
   ].join("");
 }
 
@@ -33,14 +34,14 @@ export function buildUrl(
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "BEGIN:VEVENT",
-    "URL:" + document.URL,
+    "URL:" + event.url,
     "DTSTART:" + formatDate(event.startTime),
     "DTEND:" + formatDate(event.endTime),
     "SUMMARY:" + event.title,
     "DESCRIPTION:" + event.description,
     "LOCATION:" + event.location,
     "END:VEVENT",
-    "END:VCALENDAR"
+    "END:VCALENDAR",
   ].join("\n");
 
   if (useDataURL) {
